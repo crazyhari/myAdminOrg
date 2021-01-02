@@ -1,0 +1,141 @@
+<aura:component controller="Ltng_OpportunityListRecordPage" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="DisplayAllRecords" type="boolean" default="false"/> 
+    <aura:attribute name="OpportunityList" type="List" />
+    <aura:attribute name="AllOpportunityList" type="List" />
+    <aura:attribute name="TotalRecords" type="integer"/>
+    <aura:attribute name="IsSpinner" type="boolean" default="false"/> 
+    <aura:attribute name="DisplayTotalRecsCount" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.IsSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <article class="slds-card">
+        <div class="header homeHeroChartHeader" data-aura-class="homeHeroChartHeader">
+            <h2 class="header-title-container title">
+                <span class="slds-card__header-title slds-truncate" title="Quarterly Performance">
+                    Opportunity 
+                </span>
+            </h2>
+            <div class="slds-p-bottom_small"></div>
+            
+            <aura:if isTrue="{!if(v.TotalRecords > 0,true,false)}">
+                <article class="slds-card">
+                    <div class="slds-card__body slds-card__body_opper">
+                        <div class="slds-scrollable--x">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table slds-scrollable">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th>Opportunity Name</th>
+                                        <th>Account Name</th>
+                                        <th>Stage</th>
+                                        <th>Probability (%)</th>
+                                        <th style="white-space: pre-wrap;">Created By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.OpportunityList}" var="opp">
+                                        <tr class="slds-hint-parent">
+                                            <td width="18%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                                <a data-variablename="{!opp.Id}" onclick="{!c.GoToComp}" target="_blank">{!opp.Name}</a>
+                                            </td>
+                                            <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                                <a href="{!'/one/one.app?#/sObject/'+ opp.AccountId + '/view'}" target="_blank">{!opp.Account.Name}</a>
+                                            </td>
+                                            <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                                <a href="{!'/one/one.app?#/sObject/'+ opp.StageName + '/view'}" target="_blank">{!opp.StageName}</a>
+                                            </td>
+                                            <td width="18%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                                <a href="{!'/one/one.app?#/sObject/'+ opp.Probability + '/view'}" target="_blank">{!opp.Probability}</a>
+                                            </td>
+                                            <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                                <a href="{!'/one/one.app?#/sObject/'+ opp.CreatedById + '/view'}" target="_blank">{!opp.CreatedBy.Name}</a>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer class="slds-card__footer">
+                        <a class="slds-card__footer-action">
+                            <aura:if isTrue="{!v.DisplayTotalRecsCount}">
+                                <a onclick="{!c.GetAllActionItems}"> Go to All Action items</a>
+                            </aura:if>
+                        </a>
+                    </footer>
+                </article>
+                <aura:set attribute="else">
+                    <div class="slds-box">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span>No Action items found</span>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </div>
+    </article>
+    
+    
+    <aura:if isTrue="{!v.DisplayAllRecords}">
+        <section aura:id="Modal" role="dialog" tabindex="-1" aria-labelledby="Opportunity" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon class="slds-modal__close" iconName="utility:close" variant="bare-inverse" size="large" alternativeText="Close" onclick="{!c.CloseModel}" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Opportunity</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable" id="modal-content-id-1">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table slds-scrollable">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th>Opportunity Name</th>
+                                <th>Account Name</th>
+                                <th>Stage</th>
+                                <th>Probability (%)</th>
+                                <th style="white-space: pre-wrap;">Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.AllOpportunityList}" var="opp">
+                                <tr class="slds-hint-parent">
+                                    <td width="18%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                        <a data-variablename="{!opp.Id}" target="_blank">{!opp.Name}</a>
+                                    </td>
+                                    <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                        <a href="{!'/one/one.app?#/sObject/'+ opp.AccountId + '/view'}" target="_blank">{!opp.Account.Name}</a>
+                                    </td>
+                                    <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                        <a href="{!'/one/one.app?#/sObject/'+ opp.StageName + '/view'}" target="_blank">{!opp.StageName}</a>
+                                    </td>
+                                    <td width="18%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                        <a href="{!'/one/one.app?#/sObject/'+ opp.Probability + '/view'}" target="_blank">{!opp.Probability}</a>
+                                    </td>
+                                    <td width="10%" style="white-space: pre-wrap;" class="slds-truncate"  >
+                                        <a href="{!'/one/one.app?#/sObject/'+ opp.CreatedById + '/view'}" target="_blank">{!opp.CreatedBy.Name}</a>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slds-scrollable--x"></div>
+                <footer class="slds-modal__footer">
+                    <lightning:button onclick="{!c.CloseModel}" variant="neutral">Cancel</lightning:button>
+                    <lightning:button onclick="{!c.CloseModel}" variant="brand">Close</lightning:button>
+                </footer>
+            </div>
+        </section>
+        <div aura:id="OrderModelBackdrop" class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

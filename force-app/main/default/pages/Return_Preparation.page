@@ -1,0 +1,313 @@
+<apex:page renderAs="pdf" applyBodyTag="false">
+    <form>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                @top-center {
+                content: element(header);
+                }
+                @bottom-left {
+                content: element(footer);
+                }
+                margin-bottom: 10em;
+                }
+                div.header {
+                padding: 10px;
+                position: running(header);
+                }
+                div.footer {
+                display: block;
+                padding: 5px;
+                position: running(footer);
+                }
+                .pagenumber:before {
+                content: counter(page);
+                }
+                .pagecount:before {
+                content: counter(pages);
+                }
+                #tab-line-item td,th{
+                max-width:30%;
+                }
+            </style>
+        </head>
+        <div style="padding: 10px 30px 30px 30px;" class="header">
+            <div>
+                <apex:image url="{!$Resource.SAMSCPA_logo_final_CMYK}" width="30%" height="30%"/>
+                <center>
+                    <p>Melvin L.Sams IV, CPA</p>
+                    <p> Managing Associate</p>
+                </center>
+            </div>
+            <div class="footer">
+                <center>
+                    <p>601 S Lincoln Ave., Clearwater, FL 33756</p>
+                    <p>(t) 727-386-4127 - (f) 727-386-4193</p>
+                </center>
+                <p style="text-align:right">Rev 8.12.19</p>
+            </div>
+            <div class="content">
+                <div>
+                    <center>
+                        <p>Tax Return Preparation, Consulting and Accounting Services</p>
+                        <p>ENGAGEMENT POLICY STATEMENT</p>
+                    </center>
+                    
+                    <p>RE: Professional Services</p>
+                    <p>Dear</p>
+                    <p>
+                        We appreciate the opportunity of serving you and advising you regarding your
+                        income taxes and/or accounting needs and thank you for selecting Sams IV, 
+                        CPA, PA (the "Firm") to represent ("you"). Although we regret the length
+                        and formality of this Engagement Letter Agreement ("Agreement''), it is 
+                        important that we have a clear understanding of our working relationship
+                        going forward. To ensure a complete understanding between us, we are setting
+                        forth the pertinent information about the services that we propose to provide
+                        for you. Please do not hesitate to contact us if you have any questions.
+                    </p>
+                    <b><p>Tax and Accounting work:</p></b>
+                    <p>
+                        We will prepare your federal, state, and local income tax returns based on information
+                        you furnish to us.   We will not audit or otherwise verify the data you submit to us, 
+                        although we may ask you to clarify some of it.  In order to timely file your tax returns,
+                        we need all required information no later than 30 days prior to the tax filing deadline. 
+                        You may be required to request an extension if we do not receive all required information 
+                        by the above date.
+                    </p>
+                    <p>We will be preparing the following work products for you:</p>
+                    <p style="color:Red;">[Year, Form number, due date, fee quote/range/retainer amount (if applicable)]</p>
+                    <p style="color:Red;">[Accounting service by item, fee quote/range/retainer amount (if applicable)]</p>
+                </div>
+                <div>
+                    <p>
+                        We will use our judgment in resolving questions where the tax law is unclear, or where there may be
+                        conflicts between the taxing authorities’ interpretation of the law and other supportable positions.
+                        Unless otherwise instructed by you, we will resolve such questions in your favor whenever possible.
+                    </p>
+                    <p>
+                        It is your responsibility to provide all the information required for the preparation of complete
+                        and accurate returns.  You represent that there is adequate substantiation to support deductions 
+                        for any expenses claimed on the return.
+                        <b>
+                            You are ultimately responsible for the accuracy of your return and should review it carefully
+                            before signing it.
+                        </b>
+                    </p>
+                    <p>
+                        You should retain all the documents, canceled checks, and other data which form the basis of income 
+                        and deductions.  These may be necessary to prove the accuracy and completeness of the returns to a 
+                        taxing authority.
+                    </p>
+                    <p>
+                        Your returns may be selected for review by the taxing authorities.  Any proposed adjustments by the
+                        examining agent are subject to certain rights of appeal.  In the event of such government tax 
+                        examination, we will be available upon request to represent you and will request a retainer before 
+                        performing such services.
+                    </p>
+                    <p>
+                        If there is an error on the return resulting from incorrect information supplied by you, or due to 
+                        your subsequent receipt of amended or corrected tax forms (W-2’s, 1099’s, K-1’s), you are responsible
+                        for the payment of any additional taxes which would have been properly due on the original return(s),
+                        along with any interest and penalties charged by the IRS.
+                    </p>
+                    <p><b>Consultations:</b></p>
+                    <p>
+                        Our services may come in the form of a tax return, financial statement, letter, report preparation,
+                        along with consultations, meetings or phone calls.  Our fees are based upon several factors.  We have
+                        spent many years becoming very knowledgeable and educated in tax and accounting matters.  In addition,
+                        we are required to continue our education annually to maintain our licenses.  When you contact us it is
+                        because you need our knowledge and assistance with something, this is when our time becomes billable.If
+                        you call our office with a “general” question that we can quickly answer, we consider this a courtesy 
+                        service and you will not be billed for our time.  Phone calls requiring research, business or personal 
+                        planning, tax compliance, etc. will be billed in accordance with our billing policy.Mel Sams, CPA will 
+                        have primary responsibility for the Matter but will utilize other CPAs and staff when that is appropriate
+                        and cost-effective. We will keep you informed of our progress and will utilize our best efforts to respond
+                        to you as promptly as possible. In return, you agree to keep us informed of any developments that affect 
+                        the Matter as soon as you become aware of them and to be available when we need to consult with you.
+                    </p>
+                </div>
+                <div>
+                    <p><b>Billings:</b></p>
+                    <p>
+                        Any estimate we give is based upon information you initially provide to us. The 
+                        fees and costs for the Matter are not predictable. Therefore, we cannot promise 
+                        what fees or expenses will be necessary to resolve or complete the Matter. Any 
+                        fees and costs we might have previously discussed are estimates only. You also 
+                        understand that the payment of the Firm’s fees and costs is not contingent upon
+                        the outcome of the Matter. Our staff rates range from $80 to $150 per hour. Our
+                        CPA rates range from $175 to $325 per hour. Mr. Sams’ hourly rate for the Matter
+                        is currently $325. These rates may change from time to time. We will notify you
+                        of this variance and obtain approval to proceed prior to commencing additional 
+                        services. All fees and costs incurred to prepare your income tax returns are due
+                        and payable before the returns are released from our office.
+                    </p>
+                    <p>
+                        We may bill you for costs and support services, such as photocopy and facsimile, messenger and 
+                        delivery service, online research, travel, word processing, court costs, search and filing fees.
+                        We do not bill long distance telephone charges. If we arrange a video or telephone conference on
+                        your behalf, we will bill at rates established by the service provider. Certain support services
+                        that involve equipment or staffing or that require payments to third parties may include additional
+                        charges that reflect our internal costs. It is our policy to provide the most cost effective and 
+                        efficient support systems available.
+                    </p>
+                    <p>
+                        You agree that we can make arrangements to have you billed directly by third parties,
+                        or you will pay directly invoices which we receive for costs from third parties, such
+                        as costs for consultants, appraisers, technical support, or other parties that render
+                        billable services during the Matter. If arrangements have not been made for direct 
+                        billing or direct payment by you for third-party costs, you agree that we may pay these
+                        invoices on your behalf after we have first been paid by you for such costs.
+                    </p>
+                    <p>
+                        You will receive a full paper or PDF of your income tax return, financial statements,
+                        or agreed-upon accounting reports.  Any additional copies will incur a service charge 
+                        of $30.00.  We reserve the right to hold the completed returns until your account is 
+                        paid in full.  An E-file authorization signature and payment in full is required before
+                        any tax return can be electronically filed or released.
+                    </p>
+                    <p>
+                        If your return is for a closely held corporation, partnership, limited liability company
+                        , or other entity, the person signing that return agrees to be personally liable for our
+                        fees if the entity does not pay.  Finance Charges will accrue at 1.5% per month after 45
+                        days of the invoice date.  Uncollected invoices will be subject to submittal with 
+                        collections and incur a collection fee plus Finance Charges.
+                    </p>
+                    <p><b>Payments:</b></p>
+                    <p>
+                        We reserve the right to require retainers at our discretion. New clients may be requested
+                        to remit a retainer. New client status will remain in effect for the first twenty-four (24)
+                        months of service. The retainer is an estimate of work to be performed; and additional 
+                        amounts may be due. We will not render any services until we receive the retainer funds from you.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        Accounts unpaid for 45 days will require that we cease rendering service until your account
+                        is brought current.  In the event we stop work or withdraw from this engagement as a result 
+                        of your failure to pay on a timely basis for services rendered, we shall not be liable for
+                        any damages/penalties incurred as a result of our ceasing to render services. Accounts which
+                        have been repeatedly overdue may be required to prepay for services.
+                    </p>
+                    <p>
+                        The client has ten (10) days from the invoice date, to voice any objections or questions
+                        regarding the invoice or any portion or element thereof.  After the ten (10) day period 
+                        all invoices shall constitute acceptance of the invoice as submitted and payment in full
+                        will be expected per the invoice terms.  Any courtesy billing adjustments given are honored
+                        for fourteen (14) days.  After fourteen (14) days, the invoice must be paid at the full rate
+                        and the courtesy adjustment shall be null and void. Any Non-Sufficient Funds check will be 
+                        charged an additional $50 fee.
+                    </p>
+                    <p>
+                        Either of us may terminate this Agreement at any time for any reason by written notice of
+                        ten days. The Firm is subject to applicable rules of professional conduct when terminating
+                        a client engagement. If we terminate the engagement, the Firm will take all reasonable and
+                        practical steps to protect your interests in the Matter. We will provide new CPA with the 
+                        appropriate file materials. Should this agreement be terminated prior to completion of 
+                        services, we will prepare a final bill showing the total fees incurred for services rendered.
+                        This amount will be due and payable upon presentation. Unless previously terminated, our 
+                        representation of you in the Matter will end when we send our final invoice. After the Matter
+                        ends, there might be changes in laws or regulations that might affect your future rights and 
+                        liabilities, but the Firm does not have an obligation to continue to advise you about future 
+                        developments unless you engage us to do so.
+                    </p>
+                    <p><b>Arbitration:</b></p>
+                    <p>
+                        Any dispute over fees and/or costs (a “Dispute”) that may arise between you and the Firm 
+                        shall be resolved by arbitration administered by the American Arbitration Association (AAA)
+                        under its Commercial Arbitration Rules in effect at the time of the dispute. The arbitration
+                        shall take place in Pinellas County, Florida before one (1) arbitrator who will be selected
+                        by agreement of the parties within fifteen (15) days of receipt of the arbitration notice. 
+                        If the parties do not agree upon an arbitrator within that time, then the arbitrator shall 
+                        be appointed in accordance with the selection procedure of the American Arbitration Association.
+                        The arbitrator shall apply Florida law. You further agree that you will abide by and perform any
+                        award rendered by the arbitrator, and that a judgment of any court having jurisdiction may be 
+                        entered on the award. The arbitrator shall award to the prevailing party from the arbitration 
+                        its reasonable attorneys’ fees, costs, and expense incurred during said arbitration. This agreement
+                        contains provisions requiring arbitration of fee disputers. Before you sign this agreement, you 
+                        should consider consulting with an attorney about the advisability of making an agreement with 
+                        mandatory arbitration requirements. Arbitration proceedings are ways to resolve disputes without
+                        use of the court system. By entering into agreements that require arbitration as the way to resolve
+                        fee disputes, you give up (waive) your right to go to court to resolve those disputes by a judge or
+                        jury. These are important rights that should not be given up without careful consideration.
+                    </p>
+                </div>
+                <div>
+                    <p><b>Communications:</b></p>
+                    <p>
+                        Please be advised that certain communications involving tax advice between you and our firm may
+                        be privileged and not subject to disclosure to the IRS.  If you disclose the contents of those 
+                        communications to anyone or turn over information about those communications to the government,
+                        you may be waiving this privilege.  To protect your rights, please consult with us or your attorney
+                        prior to disclosing any information about our tax advice.
+                    </p>
+                    <p>
+                        We are not permitted to share copies of income tax returns, accounting reports, financial 
+                        statements, or other work products with outside entities (such as bankers, attorneys, insurance
+                        providers, etc.) without first obtaining a signed Form 7216 for each instance. While you are 
+                        free to share these items with anyone whom you deem fit, additional charges may apply if you 
+                        desire us to facilitate this exchange of information.
+                    </p>
+                    <p><b>Disposition of Files and Records:</b></p>
+                    <p>
+                        We will retain our files pertaining to the Matter. The Firm has internal policies that 
+                        determine the retention periods for closed representation files. Therefore, the Firm 
+                        reserves the right to destroy it at the end of the defined retention period. Upon your
+                        reasonable request, the Firm will provide such portions these file materials to you as
+                        required by the applicable rules of professional responsibility or other legal requirements.
+                        Unless applicable rules of professional responsibility require an earlier return, we may 
+                        retain such file material pending receipt of payment of any outstanding fees or costs.
+                    </p>
+                    <p>
+                        If, after reading this letter, you agree to the terms and conditions set forth herein,
+                        please sign below and return this letter to our office.
+                    </p>
+                    <p>We again would like to express our appreciation for this opportunity to serve you.</p>
+                    <p>Yours very truly,</p>
+                    <p>Sams IV, CPA, PA</p>
+                </div>
+                <div>
+                    <center><p><b>Acknowledgment</b></p></center>
+                    <p>
+                        Having read and fully understood the engagement letter, I/we agree to engage Sams IV,
+                        CPA, PA in accordance with the terms indicated.  I/we understand the tax returns and/or
+                        accounting/consulting services are to be prepared from information I/we provide and that
+                        the final responsibility for a complete and accurate return/services rests with me/us.  
+                        It is also my/our responsibility to review and understand the information on the returns
+                        prior to signing and filing them.
+                    </p><br/>
+                    <p>_______________________</p>
+                    <p>Date</p>
+                    <table>
+                        <tr>
+                            <td style="text-align:left">_______________________</td>
+                            <td style="text-align:right">_______________________</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left">Print Name (Taxpayer)</td>
+                            <td style="text-align:right">Company Name (if applicable)</td>
+                        </tr>
+                    </table>
+                    <p>_______________________</p>
+                    <p>Signature</p>
+                    <p>_______________________</p>
+                    <p>Print Name (Spouse</p>
+                    <p>_______________________</p>
+                    <p>Signature</p>
+                    <p style="color:#B62506;;">
+                        <b>
+                            We must have an Engagement Policy Statement signed and returned to us before
+                            we can commence on services requested.
+                        </b>
+                    </p>
+                    <p style="color:#B62506;">
+                        We may terminate our representation of you if you insist that we pursue objectives
+                        that we consider imprudent, unprofessional, or unethical or if we feel further 
+                        representation is not warranted for personal reasons.  Regardless of the reason 
+                        for termination, you are obligated to pay for services provided and costs incurred 
+                        through the date of termination.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</apex:page>

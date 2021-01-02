@@ -1,0 +1,36 @@
+<apex:page standardController="Opportunity" extensions="OpportunityPage_Class" lightningStylesheets="true">
+    <apex:form >
+            <apex:sectionHeader title="Opportunity" />
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Opportunity Information" collapsible="false">
+                <apex:outputField value="{!opp.OwnerId}" />
+                <apex:inputField value="{!opp.IsPrivate}" />
+                <apex:inputField value="{!opp.CloseDate}" />
+                <apex:inputField value="{!opp.Name}" />
+                <apex:inputField value="{!opp.NextStep}" />
+                <apex:inputField value="{!opp.AccountId}" />
+                <apex:inputField value="{!opp.StageName}" />
+                <apex:inputField value="{!opp.Type}" />
+                <apex:inputField value="{!opp.Probability}" />
+                <apex:inputField value="{!opp.LeadSource}" />
+                <apex:inputField value="{!opp.CampaignId}" />
+                <apex:inputField value="{!opp.Amount}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Additional Information" collapsible="false">
+                <apex:inputField value="{!opp.OrderNumber__c}"/>
+                <apex:inputField value="{!opp.MainCompetitors__c}"/>
+                <apex:inputField value="{!opp.CurrentGenerators__c}"/>
+                <apex:inputField value="{!opp.DeliveryInstallationStatus__c}"/>
+                <apex:inputField value="{!opp.TrackingNumber__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Description Information" collapsible="false">
+                <apex:inputField value="{!opp.Description}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="Bottom">
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+                <apex:commandButton value="Save & New" action="{!saveNew}"/>
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

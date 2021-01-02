@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="objectName" type="string"/>
+    <aura:attribute name="fields" type="string"/>
+    <aura:attribute name="brokerFields" type="String[]" default="Name"/>
+    <aura:attribute name="isShow" type="boolean" default="false"/>
+    <aura:if isTrue="{!v.isShow}">
+    <lightning:card iconName="standard:user" title="Custom Layout">
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning:recordForm aura:id="brokerForm"
+                                recordId="{!v.recordId}"
+                                objectApiName="{!v.objectName}"
+                                fields="{!v.brokerFields}"
+                                columns="2"
+                                mode="View"/>
+        </div>
+    </lightning:card>
+    </aura:if>
+</aura:component>

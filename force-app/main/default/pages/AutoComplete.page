@@ -1,0 +1,62 @@
+<apex:page Controller="AutoCompleteController" sidebar="false" showHeader="false">
+
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <apex:remoteObjects >
+      <apex:remoteObjectModel name="User" fields="Id,Name"/>
+    </apex:remoteObjects>
+
+
+      <script>
+       function autocompleteonfocus(){
+        var selectedId = null;
+
+           $('input[id$=conName],input[id$=conEmail],input[id$=conPhone]').autocomplete({ 
+            minLength: 2,
+            delay: 500,
+            source: function( request, response ) {
+                var ContactRO = new SObjectModel.User();
+                ContactRO.retrieve({where: {Name: {like: "%" + request.term + "%" }}}, function(err, records, event) {
+                    if (err) {
+                        alert(err);
+                    } else {
+                        var result = [];
+                        records.forEach(function(record) {
+                           result.push( { 
+                               label: record.get("Name"),
+                               value: record.get("Id"),
+                               Name : record.get("Name")
+                           });
+                        });
+                        response(result);
+                    }
+                });
+            },
+            select: function(event, ui) {        
+                event.preventDefault();
+
+                 $('input[id$=conName]').val(ui.item.Name);
+                selectedId = ui.item.value;
+            },
+
+
+        });
+
+        }
+
+
+    </script> 
+
+        <apex:form >
+              <div style="margin-left: 5%; margin-right: 5%;margin-top: 5%;"> 
+                 <apex:outputPanel id="cPanel">
+                               Name:
+                                <apex:inputText value="{!conList.Name}" id="conName"  onfocus="autocompleteonfocus();"/>
+                               <br/>
+                                 
+                  </apex:outputPanel> 
+                  
+                </div>
+            </apex:form>
+    </apex:page>

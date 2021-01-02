@@ -1,0 +1,11 @@
+<aura:documentation>
+    
+	<aura:description>
+        Documentation of Student Registration Form
+    </aura:description>
+    
+	<aura:example name="LightnongComponent" ref="c:StudentRegistrationFormComponent" label="Student Form">
+		This is a Student Form Lightning Component
+	</aura:example>
+    
+</aura:documentation>

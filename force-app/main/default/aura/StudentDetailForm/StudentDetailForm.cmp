@@ -1,0 +1,280 @@
+<aura:component controller="StudentFormController" implements="flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="Student" type="Student__c" default="{'sobjectType':'Student__c'}"/>
+    <aura:attribute name="EditRecValue" type="Student__c" default="{'sobjectType':'Student__c'}"/>
+    <aura:attribute name="StudentPickLists" type="Student__c" default="{'sobjectType':'Student__c'}"/>
+    <aura:attribute name="StudentList" type="Student__c[]" />
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    <c:Customtoast aura:id="Customtoast"/>
+    <aura:attribute name="StdRecList" type="boolean" default="false" />
+    <aura:attribute name="EditPopup" type="boolean" default="false"/>
+    <aura:attribute name="NameError" type="boolean" default="false" />
+    <aura:attribute name="EmailError" type="boolean" default="false" />
+    <aura:attribute name="PhoneError" type="boolean" default="false" />
+    <aura:attribute name="StateError" type="boolean" default="false" />
+    <aura:attribute name="GenderError" type="boolean" default="false" />
+    <aura:attribute name="DateError" type="boolean" default="false" />
+    <aura:attribute name="AddressError" type="boolean" default="false" />
+    <aura:attribute name="EditNameError" type="boolean" default="false" />
+    <aura:attribute name="EditEmailError" type="boolean" default="false" />
+    <aura:attribute name="EditPhoneError" type="boolean" default="false" />
+    <aura:attribute name="EditStateError" type="boolean" default="false" />
+    <aura:attribute name="EditGenderError" type="boolean" default="false" />
+    <aura:attribute name="EditDateError" type="boolean" default="false" />
+    <aura:attribute name="EditAddressError" type="boolean" default="false" />
+    
+    <div>
+        <article class="slds-card">
+            <div class="slds-page-header">
+                <div class="slds-media">
+                    <!--div class="slds-media__figure">
+                 <lightning:icon iconName="standard:custom1" />
+                </div-->
+                    <div class="slds-align_absolute-center">
+                        <!--p class="slds-text-body_small slds-line-height_reset" title="Student">Student</p-->
+                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" >New Student Record</h1>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large" >
+                    <lightning:input  aura:id="NameId" label="Name" type="text" value="{!v.Student.Name}"/>
+                    <aura:if isTrue="{!v.NameError}">
+                        <span style="color:red">Please enter Name </span>
+                    </aura:if>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <lightning:input aura:id="EmailId" label="Email" type="email" value="{!v.Student.Email__c}"/>
+                    <aura:if isTrue="{!v.EmailError}">
+                        <span style="color:red">Please enter Email </span>
+                    </aura:if>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <lightning:input aura:id="PhoneId" label="Phone" type="number" value="{!v.Student.Phone__c}"/> 
+                    <aura:if isTrue="{!v.PhoneError}">
+                        <span style="color:red">Please enter Phone </span>
+                    </aura:if>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="select-01">State</label>
+                        <div class="slds-form-element__control">
+                            <div class="uiInput--default" >
+                                <ui:inputSelect aura:id="StateId" class="slds-select" value="{!v.Student.State__c}"/>
+                                <aura:if isTrue="{!v.StateError}">
+                                    <span style="color:red">Please enter state </span>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="select-01">Gender</label>
+                        <div class="slds-form-element__control">
+                            <div class="uiInput--default" >
+                                <ui:inputSelect aura:id="GenderId" class="slds-select" value="{!v.Student.Gender__c}"/>
+                                <aura:if isTrue="{!v.GenderError}">
+                                    <span style="color:red">Please enter Gender </span>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <lightning:input aura:id="DateId" label="Date Of Birth" type="date" value="{!v.Student.Date_Of_Birth__c}"/> 
+                    <aura:if isTrue="{!v.DateError}">
+                        <span style="color:red">Please enter Date Of Birth </span>
+                    </aura:if>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                    <lightning:textarea aura:id="AddressId" name="Address" label="Address" value="{!v.Student.Address__c}"/>
+                    <aura:if isTrue="{!v.AddressError}">
+                        <span style="color:red">Please enter Address </span>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-modal__footer">
+            <lightning:button variant="neutral" label="Cancel" onclick="{!c.close}" />
+            <lightning:button variant="neutral" label="Save and New" onclick="{!c.saveNew}" />
+            <lightning:button variant="brand" label="Save" onclick="{!c.save}" />
+        </div>
+    </div>
+    <br/>
+    
+    <aura:if isTrue="{!v.StdRecList}">
+        <div class="slds-scrollable_y" style="height:100%;">
+            <div class="slds-table">
+                <center><h3 title="Student">Student Records List</h3></center>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="State">State</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Gender">Gender</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Date Of Birth">Date Of Birth</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Address">Address</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Edit">Edit</div></th>
+                            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Delete">Delete</div></th>
+                            
+                        </tr>
+                    </thead>
+                    <aura:iteration items="{!v.StudentList}" var="stdlist" >
+                        <tr class="slds-hint-parent">
+                            <th data-label="Name" scope="row">
+                                <div class="slds-truncate" title="Name"><a href="" tabindex="-1">{!stdlist.Name}</a></div>
+                            </th>
+                            <td data-label="Email"><div class="slds-truncate">{!stdlist.Email__c}</div></td>
+                            <td data-label="Phone"><div class="slds-truncate">{!stdlist.Phone__c}</div></td>
+                            <td data-label="State"><div class="slds-truncate">{!stdlist.State__c}</div></td>
+                            <td data-label="Gender"><div class="slds-truncate">{!stdlist.Gender__c}</div></td>
+                            <td data-label="Date Of Birth"><div class="slds-truncate">{!stdlist.Date_Of_Birth__c}</div></td>
+                            <td data-label="Address"><div class="slds-truncate">{!stdlist.Address__c}</div></td>
+                            <td data-label="Edit">
+                                <button class="slds-button" onclick="{!c.EditRec}" data-id="{!stdlist.Id}">
+                                    <lightning:icon iconName="utility:edit" size="small" class="icon" />
+                                </button>
+                                <!--button type="button" class="slds-button slds-button_brand" data-id="{!stdlist.Id}" onclick="{!c.EditRec}">Edit</button-->
+                            </td>
+                            <td data-label="Delete">
+                                <button class="slds-button" onclick="{!c.deleterec}" id="{!stdlist.Id}">
+                                    <lightning:icon iconName="utility:delete" size="small" class="icon" />
+                                </button>
+                            </td>
+                            <!--td data-label="icon" class="slds-col slds-size_1-of-12" onclick="{!c.delete}" id="{!stdlist.Id}">
+                                <lightning:icon iconName="utility:delete" size="small" />
+                            </td-->
+                            <!--lightning:buttonMenu title="Show 2 more actions" iconName="utility:down" class="downbtnwiddate"
+                                                  iconSize="x-small" alternativeText="Settings" 
+                                                  onselect="{! c.handleMenuSelect }"> 
+                                <lightning:menuItem class="moreoptionmenu" label="Edit" value="{!entry.Ids+'_EDIT'}" 
+                                                    accesskey='1'/>
+                                <lightning:menuItem class="moreoptionmenu" label="Delete" value="{!entry.Ids+'_DELETE'}" 
+                                                    accesskey='2'/>
+                                
+                            </lightning:buttonMenu-->
+                            
+                        </tr>
+                    </aura:iteration>
+                </table>
+            </div>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.EditPopup}">
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeEditModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit View</h2>
+                </header>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large" >
+                            <lightning:input  aura:id="EditNameId" label="Name" type="text" value="{!v.EditRecValue.Name}"/>
+                            <aura:if isTrue="{!v.EditNameError}">
+                                <span style="color:red">Please enter Name </span>
+                            </aura:if>
+                        </div>
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <lightning:input aura:id="EditEmailId" label="Email" type="email" value="{!v.EditRecValue.Email__c}"/>
+                            <aura:if isTrue="{!v.EditEmailError}">
+                                <span style="color:red">Please enter Email </span>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <lightning:input aura:id="EditPhoneId" label="Phone" type="number" value="{!v.EditRecValue.Phone__c}"/> 
+                            <aura:if isTrue="{!v.EditPhoneError}">
+                                <span style="color:red">Please enter Phone </span>
+                            </aura:if>
+                        </div>
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="select-01">State</label>
+                                <div class="slds-form-element__control">
+                                    <div class="uiInput--default" >
+                                        <ui:inputSelect aura:id="EditStateId" class="slds-select" value="{!v.EditRecValue.State__c}"/>
+                                        <aura:if isTrue="{!v.EditStateError}">
+                                            <span style="color:red">Please enter state </span>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="select-01">Gender</label>
+                                <div class="slds-form-element__control">
+                                    <div class="uiInput--default" >
+                                        <ui:inputSelect aura:id="EditGenderId" class="slds-select" value="{!v.EditRecValue.Gender__c}"/>
+                                        <aura:if isTrue="{!v.EditGenderError}">
+                                            <span style="color:red">Please enter Gender </span>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <lightning:input aura:id="EditDateId" label="Date Of Birth" type="date" value="{!v.EditRecValue.Date_Of_Birth__c}"/> 
+                            <aura:if isTrue="{!v.EditDateError}">
+                                <span style="color:red">Please enter Date Of Birth </span>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large">
+                            <lightning:textarea aura:id="EditAddressId" name="Address" label="Address" value="{!v.EditRecValue.Address__c}"/>
+                            <aura:if isTrue="{!v.EditAddressError}">
+                                <span style="color:red">Please enter Address </span>
+                            </aura:if>
+                        </div>
+                    </div>
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start ######-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{!c.closeEditModel }"/>
+                    <lightning:button variant="brand" 
+                                      label="Update"
+                                      title="Update"
+                                      onclick="{!c.UpdateEditRec }"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+    
+</aura:component>

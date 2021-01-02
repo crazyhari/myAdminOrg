@@ -1,0 +1,34 @@
+<apex:page controller="DynamicSobjectFieldsInPicklistClass">
+    <apex:form id="Describe">
+        <apex:pageBlock id="block2" >
+            <apex:pageblockbuttons location="top" >
+                <!--apex:commandButton value="Show Fields" action="{!showFields}" /-->
+                <apex:commandButton value="Show Records" action="{!showrecords}"/>
+            </apex:pageblockbuttons>
+            <apex:pageblocksection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Object Name</apex:outputLabel>
+                    <apex:selectList value="{!selectedObject}" size="1" >
+                        <apex:selectOptions value="{!ListObejectName}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!sobj}" var="val">
+            	<apex:repeat value="{!lstFlds}" var="fld">
+                	<apex:column value="{!val[fld]}"/>
+                </apex:repeat>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            
+        </apex:pageBlock>
+        <!--apex:pageBlock id="result" title="Field Detail for {!selectedObject}" rendered="{!if(listField.size > 0 ,true,false)}">
+            <apex:pageBlockTable value="{!listField}" var="field" rendered="{!if(listField.size > 0 ,true,false)}"> 
+                <apex:column value="{!field.fieldName }" headerValue="Name" />
+                <apex:column value="{!field.fieldAPIName }"  headerValue="API Name"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock-->
+    </apex:form>
+</apex:page>

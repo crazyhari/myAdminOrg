@@ -1,0 +1,64 @@
+<template>
+    <!--<lightning-input type="text" value={myApiName}></lightning-input>-->
+    <div style="background-color: white;">
+    <div class="slds-form-element__control">
+        <div>
+        <label class="slds-form-element__label" for="form-element-05">
+            <abbr class="slds-required" title="required">* </abbr>
+        Object API Name</label>
+        <input class="search-input-block" type="text" placeholder="Enter Object API Name" name="Search" 
+                    value={searchObjAPIName}  onchange={onchangeObjSearch} />
+        </div><br/>
+        <div>
+        <label class="slds-form-element__label" for="form-element-help-01">Field API Name</label>
+        <input class="search-input-block" type="text" placeholder="Enter Field API Name" name="Search" 
+                    value={searchFieldAPIName} onchange={onchangeFieldSearch} />
+        </div>
+    </div>
+    <br/>
+    <div>
+        <lightning-button onclick={handleSubmit} label="Submit"></lightning-button>
+    </div>
+<br/>
+    <template if:true={areDetailsVisible}>
+        <div>
+            <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="ObjectName">ObjectName</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="FieldName">FieldName</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="FieldLabel">FieldLabel</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="HelpText">HelpText</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={listofdetails} for:item="keyValue">
+                        <tr key={keyValue.Id}>
+                            <th scope="col">
+                                <div>{keyValue.ObjectName}</div>
+                            </th>
+                            <th scope="col">
+                                <div>{keyValue.FieldName}</div>
+                            </th>
+                            <th scope="col">
+                                <div>{keyValue.FieldLabel}</div>
+                            </th>
+                            <th scope="col">
+                                <div>{keyValue.HelpText}</div>
+                            </th>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </template>
+	</div>
+</template>

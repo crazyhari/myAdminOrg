@@ -1,0 +1,23 @@
+<apex:page standardController="Account" extensions="DisplayRelatedAttachements">
+    <apex:outputPanel layout="none" rendered="{!AND(attachmentExists,contentPdf)}">
+        
+        <iframe src="/servlet/servlet.FileDownload?file={!attachmentId} " height ="100%" width ="100%"/>
+    </apex:outputPanel>
+    <apex:outputPanel layout="block" rendered="{!AND(attachmentExists,NOT(contentPdf))}">
+        Attachment is not in PDF format. 
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(attachmentExists)}">
+        No attachment found.
+    </apex:outputPanel>
+    <!--apex:form >
+        <table>
+            <tr>
+                <td width="100%" style="display:block;">
+                    <apex:repeat value="{!AttachementList}" var="Att"> 
+                        <apex:image url="/sfc/servlet.shepherd/version/download/{!Att.Id}" style="width:50%;height:50%;"/>
+                    </apex:repeat>
+                </td>
+            </tr>
+        </table>
+    </apex:form-->
+</apex:page>

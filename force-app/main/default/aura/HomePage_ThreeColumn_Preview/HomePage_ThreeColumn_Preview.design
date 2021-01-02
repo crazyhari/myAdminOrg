@@ -1,0 +1,17 @@
+<design:component label="My one Column Two column Page">
+    <flexipage:template>
+         
+        <flexipage:region name="left" defaultWidth="SMALL">
+            <flexipage:formfactor type="MEDIUM" width="SMALL"/>
+        </flexipage:region>
+         
+        <flexipage:region name="center" defaultWidth="large">
+            <flexipage:formfactor type="MEDIUM" width="large"/>
+        </flexipage:region>
+                
+        <flexipage:region name="right" defaultWidth="SMALL">
+            <flexipage:formfactor type="MEDIUM" width="SMALL"/>
+        </flexipage:region>
+         
+    </flexipage:template>
+</design:component>

@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+    <aura:html tag="style">.toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }
+    </aura:html>
+    <div>
+        <lightning:button label="Information"
+                          variant="brand"
+                          onclick="{!c.showInfo}"/>
+        <lightning:button label="Error"
+                          variant="destructive"
+                          onclick="{!c.showError}"/>
+        <lightning:button label="Warning"
+                          variant="neutral"
+                          onclick="{!c.showWarning}"/>
+        <lightning:button label="Success"
+                          variant="success"
+                          onclick="{!c.showSuccess}"/>
+    </div>
+</aura:component>

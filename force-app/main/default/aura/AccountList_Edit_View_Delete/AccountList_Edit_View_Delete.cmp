@@ -1,0 +1,117 @@
+<aura:component controller="Lightning_PageBlockTable" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" 
+                                access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doOnLoad}"/>
+    
+    <aura:attribute name="accounts" type="Account[]"/>
+    <aura:attribute name="editAccId" type="id"/>
+    <aura:attribute name="viewAccId" type="id"/>
+    <aura:attribute name="isEdit" type="boolean"/>
+	<aura:attribute name="isView" type="boolean"/>
+    
+    <br/>
+    <center><b>Account Records</b></center>
+    <br/>
+        
+    <table class="slds-table slds-table--bordered slds-table--striped">
+        <tr>
+        	<th><b>Account Name</b></th>
+            <th><b>Account Phone</b></th>
+            <th><b>Website</b></th>
+            <th><b>Employees</b></th>
+            <th><b>Action</b></th>
+        </tr><br/>
+    <aura:iteration items="{!v.accounts}"  var="acc">
+        
+        <tr>
+        <td style="text-align:left">{!acc.Name}</td>
+        <td>{!acc.Phone}</td>
+        <td>{!acc.Website}</td>
+        <td>{!acc.NumberOfEmployees}</td>
+            <td>
+                <button type="button" onclick="{!c.edit}" id="{!acc.Id}">Edit</button>&nbsp;&nbsp;
+            	<button type="button" onclick="{!c.view}" id="{!acc.Id}">View</button>&nbsp;&nbsp;
+                <button type="button" onclick="{!c.delete}" id="{!acc.Id}">Del</button>
+            </td>
+        </tr>
+        
+    </aura:iteration>
+    </table>
+    
+    <!--Use aura:if tag to display/hide popup based on isEdit value-->  
+        <aura:if isTrue="{!v.isEdit}">
+             
+            <!-- Edit/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                    <!-- Edit/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        
+                        <h2 id="edit-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit/PopUp Box</h2>
+                    </header>
+                    <!--Edit/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="edit-content-id-1">
+                        <p>
+                            <aura:if isTrue="{!v.isEdit}">
+                                <!--<lightning:recordEditForm recordId="{!v.editAccId}" objectApiName="Account">
+                                    <lightning:messages />
+                                    <lightning:inputField fieldName="Name" />
+                                    <lightning:inputField fieldName="Phone" />
+                                    <lightning:inputField fieldName="Website" />
+                                    <lightning:inputField fieldName="NumberOfEmployees" />
+                                </lightning:recordEditForm> -->
+                             <force:recordEdit aura:id="edit" recordId="{!v.editAccId}"/>
+                            </aura:if>
+                        </p>
+                    </div>
+                    <!--Edit/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{!c.save}"/>
+                    </footer>
+                </div>
+                </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    
+    <!--Use aura:if tag to display/hide popup based on isView value-->  
+        <aura:if isTrue="{!v.isView}">
+             
+            <!-- View/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- view/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">View/PopUp Box</h2>
+                    </header>
+                    <!--view/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            <aura:renderIf isTrue="{!v.isView}">
+                                <force:recordView aura:id="view" recordId="{!v.viewAccId}"/>
+                            </aura:renderIf>
+                        </p>
+                    </div>
+                </div>
+                </section>
+        </aura:if>
+</aura:component>

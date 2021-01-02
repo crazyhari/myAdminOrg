@@ -1,0 +1,166 @@
+<apex:page standardstylesheets="false" lightningstylesheets="true" doctype="html-5.0"
+           showHeader="false" sidebar="false" controller="OnlineShoppingtask_class">
+    <apex:form >
+        <head>
+            <apex:slds />
+            <style>
+                #main {
+                    transition: margin-left .5s;
+                    padding: 16px;
+                }
+                
+                tr.odd {
+                    background-color: #FFFFFF;
+                }
+                tr.even {
+                    background-color: #EEF1F2;
+                }
+               
+            </style>
+        </head>
+        <body>
+            <div class="slds">
+                <div class="slds-page-header" style="background-color:#63a7c0">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body" style="text-align :center" >
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title" >
+                                            <div class="slds-page-header__title slds-truncate">
+                                                <h1 style="font-family:salesforce sans;color:#fff;font-size:25px;font-style:bold">Daily Shopping</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="main">
+                <div>
+                    <apex:param value="{!$Site.errordescription}" />
+                 
+                <apex:dataTable value="{!products}" var="pitem" rowClasses="odd,even" border="2">
+                    <apex:column headerValue="Product" width="70px;" >
+                        <apex:outputText value="{!pitem.product.Name}" />
+                    </apex:column>
+                    <apex:column headervalue="Price" width="70px;">
+                        <apex:outputText id="price" value="{!pitem.product.Price__c}" />
+                    </apex:column>
+                    <apex:column headerValue="#Items" width="70px;">
+                        <!--input type="number" id="pitems" name="pitems" min="0" max="99" placeholder="0" -->
+                        <apex:inputtext value="{!pitem.tempCount}"/>
+                    </apex:column> 
+                    <apex:column headerValue="My Cart" width="70px;">
+                        <apex:commandButton action="{!shop}" value="Add to Cart" reRender="msg,cartPanel,cmdPanelId"/>
+                    </apex:column>
+                </apex:dataTable>
+                
+                <br/>
+                
+                <apex:outputPanel id="msg">
+                    {!message}
+                </apex:outputPanel>
+                
+                <br/>
+                <apex:outputPanel id="cartPanel">
+                    <apex:dataTable id="cart" value="{!cart}" var="carti" rowClasses="odd,even">
+                        <apex:column headerValue="ID" rendered="true">
+                            <apex:outputText value="{!cart[carti].product.Id}" />
+                        </apex:column>
+                        <apex:column headerValue="Product">
+                            <apex:outputText value="{!cart[carti].product.Name}" />
+                        </apex:column>
+                        <apex:column headervalue="Price">
+                            <apex:outputText value="{!cart[carti].product.Price__c}" />
+                        </apex:column>
+                        <apex:column headerValue="#Items">
+                            <apex:outputText value="{!cart[carti].count}"/>
+                        </apex:column>
+                        <apex:column headerValue="Total Count" >
+                        <apex:outputText id="PriceTotal" value="{!cart[carti].product.Price__c * cart[carti].count}" />
+                        </apex:column>
+                        <apex:column headerValue="Remove?">
+                            <apex:commandButton action="{!Remove}" value="Remove" reRender="cart,cmdPanelId">
+                                <apex:param name="rowDel" assignTo="{!rowDel}" value="{!carti}"/>
+                            </apex:commandButton>
+                        </apex:column>             
+                    </apex:dataTable><br/>
+                    <apex:outputPanel id="cmdPanelId">
+                        <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" rendered="{!incart}" />
+                        <apex:commandButton value="Place Order" action="{!save}" rendered="{!incart}" />
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                </div>
+                <!--apex:outputPanel id="checkoutPanel">
+                    <apex:dataTable id="checkout" value="{!cart}" var="carti" rowClasses="odd,even">
+                        <apex:column headerValue="Product">
+                            <apex:outputText value="{!cart[carti].product.Name}" />
+                        </apex:column>
+                        <apex:column headervalue="Price">
+                            <apex:outputText value="{!cart[carti].product.Price__c}" />
+                        </apex:column>
+                        <apex:column headerValue="#Items">
+                            <apex:outputText value="{!cart[carti].count}"/>
+                        </apex:column>
+                        <apex:column headerValue="Total Count" >
+                        <apex:outputText id="PriceTotal" value="{!}" />
+                        </apex:column>
+                        <apex:column headerValue="Remove?">
+                            <apex:commandButton action="{!Remove}" value="Remove" reRender="checkout,CheckPanelId">
+                                <apex:param name="rowDel" assignTo="{!rowDel}" value="{!carti}"/>
+                            </apex:commandButton>
+                        </apex:column>             
+                    </apex:dataTable><br/>
+                    <apex:outputPanel id="CheckPanelId">
+                        <apex:commandButton value="Checkout" action="{!checkout}" rendered="{!incart}" />
+                        <apex:commandButton value="Next" action="{!orderitems}" rendered="{!incart}" />
+                    </apex:outputPanel>
+                </apex:outputPanel-->
+                <div id="option2Page" style="display:none;">
+                    <!--apex:include pageName="vfpage2"/-->
+                    <h2>
+                        <br/>
+                        Your Basket
+                        <br/>
+                    </h2>
+                    <span id="j_id0:j_id6:cartPanel" style="width:70px;">
+                        <!--table id="" align="center" border="1" cellpadding="0" cellspacing="0">
+                            <colgroup span="5" />
+                            <thead class="">
+                                <tr>
+                                    <th scope="col" colspan="1" id="j_id0:j_id6:cart:j_id9header">
+                                        <div id="j_id0:j_id6:cart:j_id9header:sortDiv">Product</div>
+                                    </th>
+                                    <th scope="col" colspan="1" id="j_id0:j_id6:cart:j_id11header">
+                                        <div id="j_id0:j_id6:cart:j_id11header:sortDiv">Price</div>
+                                    </th>
+                                    <th scope="col" colspan="1" id="j_id0:j_id6:cart:j_id13header">
+                                        <div id="j_id0:j_id6:cart:j_id13header:sortDiv">Items</div>
+                                    </th>
+                                    <th scope="col" colspan="1" id="j_id0:j_id6:cart:j_id14header">
+                                        <div id="j_id0:j_id6:cart:j_id14header:sortDiv">Cost</div>
+                                    </th>
+                                    <th scope="col" colspan="1" id="j_id0:j_id6:cart:j_id17header">
+                                        <div id="j_id0:j_id6:cart:j_id17header:sortDiv">Remove?</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td scope="col" colspan="3"><center>Grand Total: </center></td>
+                                    <td scope="col" colspan="2"><span class="amountSum">0.00</span></td>
+                                </tr>
+                            </tfoot>
+                            <tbody id="j_id0:j_id6:cart:tb">
+                            </tbody>
+                        </table-->
+                    </span>
+                </div>
+            </div>
+        </body>
+    </apex:form>
+</apex:page>

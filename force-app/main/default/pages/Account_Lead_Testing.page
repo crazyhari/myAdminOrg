@@ -1,0 +1,38 @@
+<apex:page controller="Testingclass" sidebar="false" tabStyle="lead" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Entry Section">
+                <apex:outputText value="Enter Name"></apex:outputText>
+                <apex:inputText value="{!aname}"/>
+                <apex:outputText value="Enter Phone"></apex:outputText>
+                <apex:inputText value="{!aphone}"/>
+                <apex:outputText value="Enter Billingcity"></apex:outputText>
+                <apex:inputText value="{!acity}"/>
+            </apex:pageBlockSection>
+         <apex:pageBlockButtons >
+             <apex:commandButton value="view / insert" action="{!mi}"/>
+         </apex:pageBlockButtons>   
+         <apex:pageMessages ></apex:pageMessages>
+            
+         <apex:pageBlockSection title="List of {!aname} Account Record Exist {!na} Times">
+             <apex:pageBlockTable value="{!arecs}" var="item">
+                 <apex:column value="{!item.id}"/>
+                 <apex:column value="{!item.name}"/>
+                 <apex:column value="{!item.createddate}"/>
+                 <apex:column value="{!item.phone}"/>
+                 <apex:column value="{!item.Billingcity}"/>     
+             </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="List of {!aname} Lead Record Exist {!n1} Times">
+                <apex:pageBlockTable value="{!lrecs}" var="item">
+                    <apex:column value="{!item.id}"/>
+                    <apex:column value="{!item.name}"/>
+                    <apex:column value="{!item.createddate}"/>
+                    <apex:column value="{!item.phone}"/>
+                    <apex:column value="{!item.city}"/>
+                    <apex:column value="{!item.company}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

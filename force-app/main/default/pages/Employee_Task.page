@@ -1,0 +1,35 @@
+<apex:page standardController="Employee__c" extensions="Employee_Task">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!save}" />
+                <apex:commandButton value="SearchEmpList" action="{!search}" />
+                
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Information" collapsible="false" columns="2">
+                <apex:inputField value="{!emp.Name}" />
+                <apex:inputField value="{!emp.Email__c}" />
+                <apex:inputField value="{!emp.Company__c}" />
+                <apex:inputField value="{!emp.Phone__c}" />
+                <apex:inputField value="{!emp.Joining_Date__c}" />
+                <apex:inputField value="{!emp.Experience__c}" />
+                <apex:inputField value="{!emp.Salary__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Address Data" collapsible="false" columns="2" >
+                <apex:inputField value="{!emp.Address__c}" />
+                <apex:inputField value="{!emp.City__c}"/>
+                <apex:inputField value="{!emp.State__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:pageBlockTable value="{!eRecs}" var="e">
+                    <apex:column value="{!e.Name}" />
+                    <apex:column value="{!e.Email__c}" />
+                    <apex:column value="{!e.Phone__c}" />
+                    <apex:column value="{!e.Experience__c}" />
+                    <apex:column value="{!e.Salary__c}" />
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

@@ -1,0 +1,188 @@
+<aura:component controller="Lightning_OpportunityPageController" 
+                implements="lightning:actionOverride,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" 
+                access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="opp" type="Opportunity" default="{'sobjectType': 'Opportunity'}" /> 
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedLookUpRecordName" type="String" />
+    <aura:attribute name="isAccount" type="Boolean" default="false"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="Spinner" type="Boolean" default="false"/>
+    
+    <article class="slds-card">
+        <div class="slds-page-header">
+        	<div class="slds-media">
+                <div class="slds-media__figure">
+                	<lightning:icon iconName="standard:opportunity" />
+                </div>
+                <div class="slds-media__body">
+                    <p class="slds-text-body_small slds-line-height_reset" title="Opportunity">Opportunity</p>
+                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" >{!v.opp.Name}</h1>
+            	</div>
+            </div>
+        </div>
+    </article>
+    <br/>
+
+	<div class="slds-modal__content slds-p-around--medium">
+       
+        <div>
+            <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+             	<h3 style="font-size: 1rem;" title="">Opportunity Information</h3>
+            </div> 
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;" >
+                	<lightning:input style="padding-left: 30px;" label="Amount" type="Number" value="{!v.opp.Amount}"/> 
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;">
+                	<!-- <lightning:input style="padding-left: 30px;" label="Private" type="Checkbox" value="{!v.opp.IsPrivate}"/> -->
+                    <div style="padding-left: 30px;">
+                        <ui:inputCheckbox aura:id="checkbox" label="Private" value="{!v.opp.IsPrivate}" change="{!c.onCheck}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+            	<div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;">
+                	<lightning:input style="padding-left: 30px;" label="Close Date" type="Date" value="{!v.opp.CloseDate}" required="true"/>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;" >
+                    <lightning:input style="padding-left: 30px;" label="Opportunity Name" type="Text" value="{!v.opp.Name}" required="true"/> 
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;">
+                	<lightning:input style="padding-left: 30px;" label="Next Step" type="Text" value="{!v.opp.NextStep}"/>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;" >
+                	<div style="padding-left:30px;">
+                    	<span class="{!if(v.isAccount == false,'slds-show','slds-hide')}">
+               				<c:customLookup objectAPIName="Account" IconName="standard:account" selectedRecord="{!v.selectLookupRec}" label="Account Name"/>
+                		</span>
+                 		<lightning:input type="search" label="" class="{!if(v.isAccount == true,'slds-show','slds-hide')}" name="search" value="{!v.selectedLookUpRecordName}" onchange="{!c.clearAccountSelectedValue}"/>
+                 		<p><lightning:formattedText aura:id="fteErrorone" class="error-text-one" value="Please select Account" /></p>
+                    </div>
+            	</div>
+            </div>
+            
+           	<div class="slds-grid slds-p-top_medium">
+            	<div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;">
+                    <div class="slds-form-element" >
+                        <label class="slds-form-element__label" style="padding-left: 30px;" for="select-01">Stage</label>
+                        <div class="slds-form-element__control" style="padding-left: 30px;">
+                            <div class="uiInput--default">
+                                <ui:inputSelect aura:id="Stage" class="slds-select" value="{!v.opp.StageName}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;" >
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" style="padding-left: 30px;" for="select-01">Type</label>
+                        <div class="slds-form-element__control" style="padding-left: 30px;">
+                            <div class="uiInput--default" >
+                                <ui:inputSelect aura:id="Type" class="slds-select" value="{!v.opp.Type}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+            	<div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;">
+                	<lightning:input style="padding-left: 30px;" label="Probability (%)" type="Number" value="{!v.opp.Probability}" required="true"/>
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;" >
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" style="padding-left: 30px;" for="select-01">Lead Source</label>
+                        <div class="slds-form-element__control" style="padding-left: 30px;">
+                            <div class="uiInput--default" >
+                                <ui:inputSelect aura:id="Lead Source" class="slds-select" value="{!v.opp.LeadSource}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+            	<div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;" >
+                    <div style="padding-left:30px;">
+                    	<c:customLookup  objectAPIName="CampaignId" IconName="standard:CampaignId" label="Primary Campaign Source" selectedRecord="{!v.selectedLookUpRecord}"/>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <br/>
+        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+            <h3 style="font-size: 1rem;" >Additional Information</h3>
+        </div>
+        <div>
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;" >
+                	<lightning:input style="padding-left: 30px;" label="Order Number" type="Text" value="{!v.opp.OrderNumber__c}"/> 
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;">
+                	<lightning:input style="padding-left: 30px;" label="Main Competitor(s)" type="Text" value="{!v.opp.MainCompetitors__c}"/>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;" >
+                	<lightning:input style="padding-left: 30px;" label="Current Generator(s)" type="Text" value="{!v.opp.CurrentGenerators__c}"/> 
+                </div>
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-right: 30px;">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" style="padding-left: 30px;" for="select-01">Delivery/Installation Status</label>
+                        <div class="slds-form-element__control" style="padding-left: 30px;">
+                            <div class="uiInput--default" >
+                                <ui:inputSelect aura:id="Delivery/Installation" class="slds-select" value="{!v.opp.DeliveryInstallationStatus__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_medium">
+                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " style="padding-left: 30px;" >
+                	<lightning:input style="padding-left: 30px;" label="Tracking Number" type="Text" value="{!v.opp.TrackingNumber__c}"/> 
+                </div>
+            </div>
+        </div>
+        
+        <br/>
+        
+        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+            <h3 style="font-size: 1rem;" >Description Information</h3>
+        </div>
+        
+        <div class="slds-grid slds-p-top_medium">
+            <div class="slds-size_12-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                <lightning:textarea style="padding-left: 30px;" label="Description" type="Long Text Area" value="{!v.opp.Description}" />
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container" style="position: fixed;">
+               <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                 <span class="slds-assistive-text">Loading</span>
+                 <div class="slds-spinner__dot-a"></div>
+                 <div class="slds-spinner__dot-b"></div>
+               </div>
+            </div>
+        </aura:if>
+    
+        <br/> 
+        
+        <div class="slds-modal__footer">
+            <lightning:button variant="neutral" label="Cancel" onclick="{!c.close}" />
+            <lightning:button variant="neutral" label="Save and New" onclick="{!c.saveNew}" />
+            <lightning:button variant="brand" label="Save" onclick="{!c.save}" />
+        </div>
+        
+    </div>
+</aura:component>

@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+ 
+    <lightning:tabset>
+        <lightning:tab label="Item One">
+            Item One Content
+        </lightning:tab>
+        <lightning:tab label="Item Two">
+            Item Two Content
+        </lightning:tab>
+        <lightning:tab label="Item Three">
+            Item Three Content
+        </lightning:tab>
+    </lightning:tabset>
+     
+</aura:component>

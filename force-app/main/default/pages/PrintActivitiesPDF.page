@@ -1,0 +1,47 @@
+<apex:page controller="ActivitiesForCase" action="{!GetActivities}" contentType="application/x-pdf#Sample.pdf" renderas="PDF" applyBodyTag="false">
+    <head>
+    <style>
+         .pre {
+            overflow-x: auto;
+            white-space: pre-line;
+            word-wrap: break-word;
+         }
+         
+         .hr {
+            display: block;
+            /* margin: 2rem 0; */
+            border-top: 2px solid rgb(221, 219, 218);
+            clear: both;
+        }
+         
+      </style>
+    </head>
+    
+    <body>
+        <apex:repeat value="{!InnerClassList}" var="Inn">
+            <apex:outputpanel rendered="{!IF(Inn.FromEmail == 'helpcustomerhelp95@gmail.com',true,false)}" >
+                <div style="overflow-x: auto;white-space: pre-line;word-wrap: break-word;">
+                    FROM Salesforce :- {!Inn.TextBody}
+                    <hr></hr>
+                </div>
+            </apex:outputpanel>   
+            
+            <apex:outputpanel rendered="{!IF(Inn.FromEmail == Inn.CaseWebEmail,true,false)}" >
+                <div style="overflow-x: auto;white-space: pre-line;word-wrap: break-word;">
+                    FROM Customer :- {!Inn.TextBody}
+                    <hr></hr>
+                </div>
+            </apex:outputpanel>
+            
+            <apex:outputpanel rendered="{!IF((Inn.FromEmail != Inn.CaseWebEmail && Inn.FromEmail != 'helpcustomerhelp95@gmail.com'),true,false)}" >
+                <div style="overflow-x: auto;white-space: pre-line;word-wrap: break-word;">
+                    FROM Salesforce :- {!Inn.TextBody} 
+                    <hr></hr>
+                </div>
+            </apex:outputpanel>
+            
+            
+        </apex:repeat>
+    </body>
+    
+</apex:page>
