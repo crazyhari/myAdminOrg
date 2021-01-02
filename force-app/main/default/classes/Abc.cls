@@ -4,6 +4,5 @@ public class Abc {
         Account ac = new Account();
         ac.Name = 'Sree';
         insert ac;
-        System.debug(ac);
     }
 }
